@@ -1,0 +1,17 @@
+
+tmp/hallon/Storage
+
+# Vim cruft
+*.swp
+*.swo
+*.un~
+tags
+
+# Mac OS X
+.DS_Store
+
+# Git fun
+*.orig
+
+# Misc
+*.dump
