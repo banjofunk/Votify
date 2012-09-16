@@ -1,5 +1,6 @@
 
-tmp/hallon/Storage
+#tmp/hallon/Storage
+log.txt
 
 # Vim cruft
 *.swp
