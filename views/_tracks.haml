@@ -1,0 +1,36 @@
+#artists.search-column
+  %h3
+    Artists
+  %ul
+    - if @artists
+      - @artists.each do |artist|
+        %li
+          %a{:href=>artist.to_link.to_str}
+            = artist.name
+    - else
+      %li
+        Enter A Search
+#albums.search-column
+  %h3
+    Albums
+  %ul
+    - if @albums
+      - @albums.each do |album|
+        %li
+          %a{:href=>album.to_link.to_str}
+            = album.name
+    - else
+      %li
+        Enter A Search
+#tracks.search-column
+  %h3
+    Tracks
+  %ul
+    - if @tracks
+      - @tracks.each do |track|
+        %li
+          %a{:href=>track.to_link.to_str}
+            = track.name
+    - else
+      %li
+        Enter A Search

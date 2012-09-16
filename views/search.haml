@@ -1,0 +1,37 @@
+:javascript
+  var runQuery = function(){
+    var query = $('#search-box').val();
+    var url_query = encodeURIComponent(query);
+    $('#results').load("/search/" + url_query);
+  }
+  $(function(){
+    $('#search').click(function(){
+      runQuery();
+    });
+    $('#search-box').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        runQuery();
+      }
+    });
+  })
+
+:css
+  .search-column{
+    width:30%;
+    float:left;
+    margin-left:1%;
+    border:medium solid black;
+    border-radius:10px;
+  }
+
+%h1
+  Search
+%input#search-box{:type => 'text', :style => 'margin:5px;margin-left:15px;'}
+%button#search{:type => 'submit'}
+  search
+%br
+#results
+  = haml(:_search, :layout => false)
+#player
+

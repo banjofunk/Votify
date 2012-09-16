@@ -1,0 +1,75 @@
+:javascript
+  $(function(){
+    $('#artists a').click(function(event){
+      event.preventDefault();
+      var query = $(this).attr('href');
+      $('#results').load("/select/artist/" + query);
+    });
+    $('#albums a').click(function(event){
+      event.preventDefault();
+      var query = $(this).attr('href');
+      $('#results').load("/select/album/" + query);
+    });
+    $('#tracks a').click(function(event){
+      event.preventDefault();
+      var query = $(this).attr('href');
+      $('#player').load("/play/track/" + query);
+    });
+    $('#back-search').click(function(event){
+      runQuery();
+    });
+  })
+
+#artists.search-column
+  - if @artist
+    %h1
+      %a{:href => @artist.artist.load.to_link.to_str}
+        = @artist.artist.name
+    %button#back-search
+      Back
+    %hr
+    %h3
+      related artists
+    %ul
+      - if @artist.similar_artists.count > 0
+        - @artist.similar_artists.each do |related|
+          %li
+            %a{:href => related.to_link.to_str}
+              = related.name
+    %hr
+    %h3
+      biography
+    %p
+      - if @artist.biography
+        = @artist.biography
+      - else
+        No biography available
+#albums.search-column
+  %h3
+    Albums
+  %ul
+    - if @albums
+      - @albums.each do |album|
+        - if album.available? && album.artist.name != 'Various Artists'
+          %li
+            %a{:href=>album.to_link.to_str}
+              = album.name
+    - else
+      %li
+        No Albums
+#tracks.search-column
+  %h3
+    Tracks
+  %ul
+    - if @tracks
+      - @tracks.each do |track|
+        %li
+          -if track.available?
+            %a{:href=>track.to_link.to_str}
+              = "#{track.name} - #{track.playable_track}"
+          - else
+            %p
+              = "#{track.name} - #{track.playable_track}"
+    - else
+      %li
+        No Tracks

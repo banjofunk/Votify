@@ -1,0 +1,57 @@
+:javascript
+  $(function(){
+    $('.search-column a').click(function(event){
+      event.preventDefault();
+      var query = $(this).attr('href');
+      var type = query.split(':')[1];
+      $('#results').load("/select/" + type + "/" + query);
+    });
+    $('#back').click(function(event){
+      event.preventDefault();
+      var query = $(this).attr('href');
+      var type = query.split(':')[1];
+      $('#results').load("/select/" + type + "/" + query);
+    });
+    $('#back-search').click(function(event){
+      runQuery();
+    });
+  })
+
+#artists.search-column
+  - if @artist.artist
+    %h3
+      %a{:href => @artist.artist.to_link.to_str}
+        = @artist.artist.name
+    %button#back-search
+      Back
+    %hr
+    %p
+      - if @artist.biography
+        = @artist.biography
+      - else
+        No biography available
+#albums.search-column
+  %h3
+    - if @album.name
+      %a{:href => @album.load.to_link.to_str}
+        = @album.name
+    - else
+      no name
+  %button#back{:href => @album.artist.to_link.to_str}
+    Back
+#tracks.search-column
+  %h3
+    Tracks
+  %ul
+    - if @tracks
+      - @tracks.each do |track|
+        %li
+          -if track.available?
+            %a{:href=>track.to_link.to_str}
+              = track.name
+          - else
+            %p
+              = track.name
+    - else
+      %li
+        No Tracks
