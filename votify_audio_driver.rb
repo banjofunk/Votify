@@ -1,4 +1,7 @@
 # coding: utf-8
+
+require 'lame_encoder'
+
 module Hallon
   # This is an implementation of a fictionary audio driver for Hallon. Each method is
   # documented with expectations, parameters and other details. This class should serve
@@ -67,6 +70,7 @@ module Hallon
     # @option new_format [Symbol] :type sample type (eg. :int16)
     def format=(new_format)
       @format = new_format
+      puts "----- new format -----. #{@format}"
     end
 
     # This method is expected to return the currently set format, which
@@ -129,7 +133,16 @@ module Hallon
             # audio format has changed, reinitialize buffers
             break
           else
-            File.open('./log.txt', 'a') {|f| f << "you're here again part deux --> #{audio_data}" }
+            packed = audio_data.pack("s*")
+            File.open('./tmp/riptastic.raw', 'a') << packed
+
+            # l = LameEncoder.new
+            # l.input_raw(44.1)
+            # l.mode(:stereo)
+            # l.input_file('./tmp/riptastic.raw')
+            # l.output_file('./tmp/riptastic.mp3')
+            # l.convert!
+
             # playback the audio data
           end
         end

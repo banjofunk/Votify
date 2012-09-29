@@ -18,8 +18,6 @@ class Jukebox
   def play(uri = nil)
     track = uri ? Hallon::Track.new(uri).load : ""
     @player.play(track)
-    sleep 1
-    puts "you're here again part deux --> #{@player.to_s}\n"
   end
 
   def pause

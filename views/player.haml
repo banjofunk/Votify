@@ -1,0 +1,15 @@
+:javascript
+  var startTime = 0;
+
+  for (var i = 0, audioChunk; audioChunk = AUDIO_CHUNKS[i]; ++i) {
+    // Create/set audio buffer for each chunk
+    var audioBuffer = audioCtx.createBuffer(2, 44100, 44100);
+    audioBuffer.getChannelData(0).set(audioChunk);
+
+    var source = audioCtx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.noteOn(startTime);
+    source.connect(audioCtx.destination);
+
+    startTime += audioBuffer.duration;
+  }
