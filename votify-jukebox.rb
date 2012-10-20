@@ -12,7 +12,7 @@ class Jukebox
       session.login!('joshsfunkybanjo', 'skiing1')
     end
     # @player = Hallon::Player.new(Hallon::OpenAL)
-    @player = Hallon::Player.new(Hallon::VotifyAudioDriver)
+    @player = Hallon::VotifyPlayer.new(Hallon::VotifyAudioDriver)
   end
 
   def play(uri = nil)

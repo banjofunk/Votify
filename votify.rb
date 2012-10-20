@@ -3,6 +3,7 @@ require "sinatra/streaming"
 require 'haml'
 require './votify-jukebox'
 require './votify-search'
+require './votify-player'
 require 'lame_encoder'
 
 get '/stream' do
@@ -16,6 +17,8 @@ get '/stream-data' do
     l.mode(:stereo)
     l.input_file('./tmp/riptastic.raw')
     l.output_file('./public/spot_rip.mp3')
+    # l.input_file('-')
+    # l.output_file('./public/spot_rip.mp3')
     l.convert!
   end
 end
