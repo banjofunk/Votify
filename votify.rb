@@ -1,15 +1,22 @@
 require 'sinatra'
+require "sinatra/streaming"
 require 'haml'
 require './votify-jukebox'
 require './votify-search'
+require 'lame_encoder'
 
-get '/test' do
-  stream do |out|
-    out << "It's gonna be legen -\n"
-    sleep 0.5
-    out << " (wait for it) \n"
-    sleep 1
-    out << "- dary!\n"
+get '/stream' do
+  haml :player_new, :layout => false
+end
+
+get '/stream-data' do
+  stream(:keep_open) do |out|
+    l = LameEncoder.new
+    l.input_raw(44.1)
+    l.mode(:stereo)
+    l.input_file('./tmp/riptastic.raw')
+    l.output_file('./public/spot_rip.mp3')
+    l.convert!
   end
 end
 

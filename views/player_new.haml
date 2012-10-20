@@ -16,24 +16,19 @@
       var loader = this;
 
       request.onload = function() {
-
-          console.log(request.response);
-          var audioBuffer = context.createBuffer(2, 44100, 44100);
-          audioBuffer.getChannelData(0).set(request.response);
-
           // Asynchronously decode the audio file data in request.response
-          // loader.context.decodeAudioData(
-          //     request.response,
-          //     function(buffer) {
-          //         if (!buffer) {
-          //             alert('error decoding file data: ' + url);
-          //             return;
-          //         }
-          //         loader.bufferList[index] = buffer;
-          //         if (++loader.loadCount == loader.urlList.length)
-          //             loader.onload(loader.bufferList);
-          //     }    
-          // );
+          loader.context.decodeAudioData(
+              request.response,
+              function(buffer) {
+                  if (!buffer) {
+                      alert('error decoding file data: ' + url);
+                      return;
+                  }
+                  loader.bufferList[index] = buffer;
+                  if (++loader.loadCount == loader.urlList.length)
+                      loader.onload(loader.bufferList);
+              }    
+          );
       }
 
       request.onerror = function() {
@@ -60,8 +55,8 @@
       bufferLoader = new BufferLoader(
           context,
           [
-          // "/riptastic.raw",
-          "/powerup.wav",
+          "/spot_rip.mp3",
+          "/powerup.wav"
           ],
           finishedLoading
       );
@@ -72,12 +67,12 @@
   function finishedLoading(bufferList) {
       // Create two sources and play them both together.
       var source1 = context.createBufferSource();
-      // var source2 = context.createBufferSource();
+      var source2 = context.createBufferSource();
       source1.buffer = bufferList[0];
-      // source2.buffer = bufferList[1];
+      source2.buffer = bufferList[1];
       
       source1.connect(context.destination);
-      // source2.connect(context.destination);
+      source2.connect(context.destination);
       source1.noteOn(0);
-      // source2.noteOn(.2);
+      source2.noteOn(.2);
   }

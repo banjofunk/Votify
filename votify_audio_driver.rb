@@ -133,8 +133,11 @@ module Hallon
             # audio format has changed, reinitialize buffers
             break
           else
-            packed = audio_data.pack("s*")
-            File.open('./tmp/riptastic.raw', 'a') << packed
+            audio_data
+
+
+            # packed = audio_data.pack("s*")
+            # File.open('./tmp/riptastic.raw', 'a') << audio_data.to_s[1..-2]+","
 
             # l = LameEncoder.new
             # l.input_raw(44.1)
